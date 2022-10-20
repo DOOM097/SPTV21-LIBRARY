@@ -3,22 +3,18 @@ package entity;
 
 import java.util.Arrays;
 
+
 public class Book {
-    private String bookName;
-    private Author[] authors;
-    private int publishedYear;
-    private int quantity;
+    private String title;
+    private Author[] authors = new Author[0]; 
 
     public Book() {
-        authors = new Author[0];
+        
     }
 
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public Book(String title, Author[] authors) {
+        this.title = title;
+        this.authors = authors;
     }
 
     public Author[] getAuthors() {
@@ -28,37 +24,46 @@ public class Book {
     public void setAuthors(Author[] authors) {
         this.authors = authors;
     }
-    public void addAuthor(Author author){
-        Author[] newAuthors = Arrays.copyOf(authors, authors.length+1);
-        newAuthors[newAuthors.length - 1] = author;
-        authors = newAuthors;
-        
-    } 
 
-    public int getPublishedYear() {
-        return publishedYear;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPublishedYear(int publishedYear) {
-        this.publishedYear = publishedYear;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
     public String toString() {
-        return "Book{" 
-                + "bookName=" + bookName 
-                + ", authors=" + Arrays.toString(authors) 
-                + ", publishedYear=" + publishedYear 
-                + ", quantity=" + quantity 
+        return "Book{"
+                + "title=" + title 
+                + ", authors=" + Arrays.toString(authors)
                 + '}';
     }
+
+    public void addAuthor(Author author) {
+        Author[] newAuthors = Arrays.copyOf(authors, authors.length+1);
+        newAuthors[newAuthors.length-1] = author;
+        this.authors = newAuthors;
+    }
+    
+    public void removeAuthor(int numberOfAuthor){
+        //обнуляем указанного автора (по индексу)
+        this.getAuthors()[numberOfAuthor-1]=null;
+        //создаем массив с количеством элементов на 1 меньше
+        Author[] newAuthors = new Author[this.getAuthors().length-1];
+        // в цикле копируем элементы в новый массив не учитывая обнуленную ячейку
+        int j = 0;
+        for (Author author : this.getAuthors()) {
+            if (author != null) {
+                newAuthors[j] = author;
+                j++;
+            }
+        }
+        //копируем ссылку на новый массив в книгу
+        this.setAuthors(newAuthors);
+    }
+    
+    
     
 }

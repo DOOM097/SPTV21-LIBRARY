@@ -1,3 +1,4 @@
+
 package entity;
 
 public class Reader {
@@ -8,12 +9,10 @@ public class Reader {
     public Reader() {
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
+    public Reader(String firstname, String lastname, String phone) {
         this.firstname = firstname;
+        this.lastname = lastname;
+        this.phone = phone;
     }
 
     public String getLastname() {
@@ -22,6 +21,14 @@ public class Reader {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getPhone() {
@@ -40,7 +47,5 @@ public class Reader {
                 + ", phone=" + phone 
                 + '}';
     }
-   
-
-
+    
 }
