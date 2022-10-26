@@ -1,7 +1,6 @@
 
 package sptv21library;
 
-
 public class SPTV21Library {
     
     public static void main(String[] args) {

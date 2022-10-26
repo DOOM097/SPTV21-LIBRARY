@@ -1,4 +1,6 @@
-package entity;
+
+package Entity;
+
 
 public class Author {
     private String firstname;
@@ -41,4 +43,5 @@ public class Author {
                 + '}';
     }
     
+
 }

@@ -1,5 +1,7 @@
 
-package entity;
+
+package Entity;
+
 
 public class Reader {
     private String firstname;
@@ -9,10 +11,12 @@ public class Reader {
     public Reader() {
     }
 
-    public Reader(String firstname, String lastname, String phone) {
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
         this.firstname = firstname;
-        this.lastname = lastname;
-        this.phone = phone;
     }
 
     public String getLastname() {
@@ -21,14 +25,6 @@ public class Reader {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
     }
 
     public String getPhone() {
