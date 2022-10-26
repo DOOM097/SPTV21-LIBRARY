@@ -5,7 +5,7 @@ import Entity.Reader;
 import java.util.Scanner;
 
 public class ReaderManager {
-    private Scanner scanner;
+    private final Scanner scanner;
 
 
     public ReaderManager() {
