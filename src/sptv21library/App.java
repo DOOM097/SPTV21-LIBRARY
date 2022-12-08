@@ -1,34 +1,41 @@
+
+
 package sptv21library;
 
-import Entity.Book;
-import Entity.History;
-import Entity.Reader;
-import Manager.BookManager;
-import Manager.ReaderManager;
-import Manager.HistoryManager;
-
-import java.util.Arrays;
+import entity.Book;
+import entity.History;
+import entity.Reader;
+import java.util.List;
 import java.util.Scanner;
+import manager.BookManager;
+import manager.DataManager;
+import manager.HistoryManager;
+import manager.ReaderManager;
+
 
 public class App {
     private final Scanner scanner;
-    private Book[] books;
-    private Reader[] readers;
-    private History[] histories;
     private final BookManager bookManager;
     private final ReaderManager readerManager;
     private final HistoryManager historyManager;
+    private final DataManager dataManager;
+    //private Book[] books;
+    private List<Book> books;
+    //private Reader[] readers;
+    private List<Reader> readers;
+    private List<History> histories;
 
     public App() {
         scanner = new Scanner(System.in);
-        books = new Book[0];
-        readers = new Reader[0];
-        histories = new History[0];
+        dataManager = new DataManager();
+        books = dataManager.loadBooks();
+        readers = dataManager.loadReaders();
+        histories = dataManager.loadHistories();
         bookManager = new BookManager();
         readerManager = new ReaderManager();
         historyManager = new HistoryManager();
     }
-
+    
     public void run(){
         boolean repeat = true;
         do{
@@ -42,6 +49,7 @@ public class App {
             System.out.println("6. Список книг");
             System.out.println("7. Список читателей");
             System.out.println("8. Редактировать книгу");
+            System.out.println("9. Редактировать читателя");
             System.out.print("Выберите задачу: ");
             int task = scanner.nextInt();
             scanner.nextLine();
@@ -51,22 +59,23 @@ public class App {
                     break;
                 case 1:
                     System.out.println("1. Добавить книгу");
-                    addBook(bookManager.createBookWithAuthot());
-
+                    books.add(bookManager.createBookWithAuthors());
+                    dataManager.saveBooks(books);
                     break;
                 case 2:
                     System.out.println("2. Добавить читателя");
-                    addReader(readerManager.createReader());
+                    readers.add(readerManager.createReader());
+                    dataManager.saveReaders(readers);
                     break;
                 case 3:
                     System.out.println("3. Выдать книгу");
-                    addHistory(historyManager.takeOnBook(books, readers));
+                    histories.add(historyManager.takeOnBook(books, readers));
                     break;
-                case 4:
+                case 4: 
                     System.out.println("4. Вернуть книгу");
                     histories = historyManager.returnBook(histories);
                     break;
-                case 5:
+                case 5: 
                     System.out.println("5. Список выданных книг");
                     historyManager.printReadingBooks(histories);
                     break;
@@ -76,10 +85,15 @@ public class App {
                     break;
                 case 7:
                     System.out.println("7. Список читателей");
-                    readerManager.printListReader(readers);
+                    readerManager.printListReaders(readers);
                     break;
                 case 8:
+                    System.out.println("8. Редактирование книги");
                     this.books = bookManager.changeBook(books);
+                    break;
+                case 9:
+                    System.out.println("8. Редактирование читателя");
+                    this.readers = readerManager.changeReader(readers);
                     break;
                 default:
                     System.out.println("Выберите задачу из списка!");;
@@ -88,16 +102,16 @@ public class App {
         System.out.println("Закрытие программы, пока!");
     }
 
-    private void addBook(Book book) {
-        this.books = Arrays.copyOf(this.books, this.books.length+1);
-        this.books[this.books.length - 1] = book;
-    }
-    private void addReader(Reader reader) {
-        this.readers = Arrays.copyOf(this.readers, this.readers.length+1);
-        this.readers[this.readers.length - 1] = reader;
-    }
-    private void addHistory(History histories) {
-        this.histories = Arrays.copyOf(this.histories, this.histories.length+1);
-        this.histories[this.histories.length - 1] = histories;
-    }
+//    private void addBook(Book book) {
+//        this.books = Arrays.copyOf(this.books, this.books.length+1);
+//        this.books[this.books.length - 1] = book;   
+//    }
+//    private void addReader(Reader reader) {
+//        this.readers = Arrays.copyOf(this.readers, this.readers.length+1);
+//        this.readers[this.readers.length - 1] = reader;   
+//    }
+//    private void addHistory(History histories) {
+//        this.histories = Arrays.copyOf(this.histories, this.histories.length+1);
+//        this.histories[this.histories.length - 1] = histories;   
+//    }
 }
