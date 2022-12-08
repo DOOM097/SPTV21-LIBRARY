@@ -7,8 +7,9 @@ import entity.History;
 import entity.Reader;
 import java.util.List;
 import java.util.Scanner;
+import manager.BaseDataManager;
 import manager.BookManager;
-import manager.DataManager;
+import manager.FileDataManager;
 import manager.HistoryManager;
 import manager.ReaderManager;
 
@@ -18,7 +19,8 @@ public class App {
     private final BookManager bookManager;
     private final ReaderManager readerManager;
     private final HistoryManager historyManager;
-    private final DataManager dataManager;
+    //private final FileDataManager dataManager;
+    private final BaseDataManager dataManager;
     //private Book[] books;
     private List<Book> books;
     //private Reader[] readers;
@@ -27,10 +29,11 @@ public class App {
 
     public App() {
         scanner = new Scanner(System.in);
-        dataManager = new DataManager();
+        //dataManager = new FileDataManager();
+        dataManager = new BaseDataManager();
         books = dataManager.loadBooks();
-        readers = dataManager.loadReaders();
-        histories = dataManager.loadHistories();
+//        readers = dataManager.loadReaders();
+//        histories = dataManager.loadHistories();
         bookManager = new BookManager();
         readerManager = new ReaderManager();
         historyManager = new HistoryManager();
@@ -65,15 +68,17 @@ public class App {
                 case 2:
                     System.out.println("2. Добавить читателя");
                     readers.add(readerManager.createReader());
-                    dataManager.saveReaders(readers);
+                    //dataManager.saveReaders(readers);
                     break;
                 case 3:
                     System.out.println("3. Выдать книгу");
                     histories.add(historyManager.takeOnBook(books, readers));
+                    //dataManager.saveHistories(histories);
                     break;
                 case 4: 
                     System.out.println("4. Вернуть книгу");
                     histories = historyManager.returnBook(histories);
+                    //dataManager.saveHistories(histories);
                     break;
                 case 5: 
                     System.out.println("5. Список выданных книг");
@@ -90,10 +95,12 @@ public class App {
                 case 8:
                     System.out.println("8. Редактирование книги");
                     this.books = bookManager.changeBook(books);
+                    dataManager.saveBooks(books);
                     break;
                 case 9:
                     System.out.println("8. Редактирование читателя");
                     this.readers = readerManager.changeReader(readers);
+                    //dataManager.saveReaders(readers);
                     break;
                 default:
                     System.out.println("Выберите задачу из списка!");;
